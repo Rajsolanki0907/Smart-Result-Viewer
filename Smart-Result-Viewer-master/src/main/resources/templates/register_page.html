@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center min-h-screen">
+<div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+    <div class="flex flex-col items-center mb-6">
+        <div class="bg-indigo-500 p-3 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                      d="M10 2a6 6 0 00-6 6v1a3 3 0 00-3 3v5a3 3 0 003 3h12a3 3 0 003-3v-5a3 3 0 00-3-3V8a6 6 0 00-6-6zM8 10a2 2 0 114 0 2 2 0 01-4 0zm8 5a2 2 0 00-2-2H6a2 2 0 000 4h8a2 2 0 002-2z"
+                      clip-rule="evenodd"/>
+            </svg>
+        </div>
+        <h1 class="text-2xl font-bold text-gray-800 mt-4">Teacher Registration</h1>
+        <p class="text-gray-500 mt-1">Create your teacher account</p>
+    </div>
+
+    <form id="registrationForm" th:action="@{'/register-teacher'}" method="post" onsubmit="return validatePasswords()">
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+            <input type="text" id="name" name="name"
+                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="id" class="block text-gray-700 font-medium mb-2">Teacher ID</label>
+            <input type="text" id="id" name="id"
+                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="username" class="block text-gray-700 font-medium mb-2">Username</label>
+            <input type="text" id="username" name="username"
+                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-4 relative">
+            <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+            <input type="password" id="password" name="password"
+                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+            <button type="button" onclick="togglePassword('password', 'togglePasswordIcon')"
+                    class="absolute inset-y-0 right-3 top-8 text-gray-500">
+                👁️
+            </button>
+        </div>
+
+        <!-- Repeat Password -->
+        <div class="mb-6 relative">
+            <label for="repeat-password" class="block text-gray-700 font-medium mb-2">Repeat Password</label>
+            <input type="password" id="repeat-password" name="repeatPassword"
+                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" required>
+            <button type="button" onclick="togglePassword('repeat-password', 'toggleRepeatPasswordIcon')"
+                    class="absolute inset-y-0 right-3 top-8 text-gray-500">
+                👁️
+            </button>
+        </div>
+
+        <p id="passwordError" class="text-red-500 text-sm mb-4 hidden">Passwords do not match!</p>
+
+        <button type="submit"
+                class="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Register
+        </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-500 mt-6">
+        Already have an account? <a href="#" class="text-indigo-500 hover:underline">Sign in</a>
+    </p>
+</div>
+
+<script>
+    function togglePassword(fieldId, iconId) {
+        const field = document.getElementById(fieldId);
+        if (field.type === "password") {
+            field.type = "text";
+        } else {
+            field.type = "password";
+        }
+    }
+
+    function validatePasswords() {
+        const password = document.getElementById("password").value;
+        const repeatPassword = document.getElementById("repeat-password").value;
+        const errorElement = document.getElementById("passwordError");
+
+        if (password !== repeatPassword) {
+            errorElement.classList.remove("hidden");
+            return false;
+        } else {
+            errorElement.classList.add("hidden");
+            return true;
+        }
+    }
+</script>
+
+</body>
+</html>
